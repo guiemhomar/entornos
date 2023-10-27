@@ -9,3 +9,4 @@ if (C > A) and (C > B):
     print (C, "es mayor")
 if (A == B) and (A == C):
     print ("A, B y C son iguales")
+    
