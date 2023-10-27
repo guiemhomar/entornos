@@ -1,0 +1,7 @@
+nombre=str(input("Introduzca tu nombre"))
+primerapellido=str(input("Introduzca primer apellido"))
+segundoapellido=str(input("Introduzca segundo apellido"))
+grado=str(input("Introduzca el grado que cursa"))
+colorfavorito=str(input("Introduzca tu nombretu color favorito"))
+pelifavorita=str(input("Introduzca pelicula favorita"))
+print ("El alumno", nombre,  primerapellido,  segundoapellido, "cursa", grado,  "su color favorito es el ", colorfavorito,  "y su peli favorita es", pelifavorita)
