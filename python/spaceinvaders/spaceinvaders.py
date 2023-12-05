@@ -14,11 +14,12 @@ nave = elementos.Nave()
 
 while not salir:
     clock.tick(FPS)
+   
     #gestionar eventos
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             salir = True
-
+ 
     teclas = pygame.key.get_pressed()
     
     if teclas[pygame.K_LEFT]:
@@ -31,7 +32,9 @@ while not salir:
     #gestionar cambios
     pantalla.fill((255,255,255))
 
-    nave.dibujar()
+    nave.fondo()
+    nave.Messi()
+    nave.cr7()
 
     #redibujar el juego
     pygame.display.flip()
