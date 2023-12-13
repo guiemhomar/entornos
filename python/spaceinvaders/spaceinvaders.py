@@ -1,6 +1,7 @@
 import pygame
 import elementos
 
+
 pygame.init()
 pantalla = pygame.display.set_mode((800,600))
 
@@ -10,7 +11,7 @@ clock = pygame.time.Clock()
 FPS = 60
 
 nave = elementos.Nave()
-
+fondo = elementos.Fondo()
 
 while not salir:
     clock.tick(FPS)
@@ -32,7 +33,7 @@ while not salir:
     #gestionar cambios
     pantalla.fill((255,255,255))
 
-    nave.fondo()
+    fondo.fons()
     nave.Messi()
     nave.cr7()
 
