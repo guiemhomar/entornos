@@ -1,5 +1,6 @@
 import pygame
 import elementosSpace2
+import random
 
 #inicializamos el juego
 pygame.init()
@@ -26,9 +27,13 @@ grupo_sprites.add(elementosSpace2.Nave((300,100)))
 grupo_sprites.add(elementosSpace2.Nave((400,100)))
 grupo_sprites.add(elementosSpace2.Nave((500,100)))
 
+enemigo = elementosSpace2.Enemigo((50,50))
+grupo_sprites.add(enemigo)
+
+#crear una variable que almacene la ultima vez que se creo un enemigo
+ultimo_enemigo_creado = 0
 
 #bucle principal
-
 while running:
     #limitamos el bucle a framerate que hemos definido
     reloj.tick(FPS)
@@ -37,6 +42,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    #creacion de enemigos
+    momento_actual = pygame.time.get_ticks()
+    if (momento_actual > ultimo_enemigo_creado + 60):
+        grupo_sprites.add(elementosSpace2.Enemigo((random.randint(0,pantalla.get_width()),0)))
+        ultimo_enemigo_creado = momento_actual
 
     #fondo blanco
     pantalla.fill((255,255,255))
