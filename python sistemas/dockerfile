@@ -1,0 +1,6 @@
+FROM ubuntu
+Run apt-get update
+RUN apt-get install -y python3 python3-pip
+
+
+source.list
