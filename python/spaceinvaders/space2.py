@@ -127,6 +127,7 @@ def start_the_game():
                 ultimo_enemigo_creado = momento_actual
                 #grupo_sprites.add(elementosSpace2.Enemigo((random.randint(0,pantalla.get_width()),0)))
              
+            #actualizamos los sprites
             grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_balas)
         
     
