@@ -6,7 +6,7 @@ import pygame_menu
 pygame.init()
 
 #creamos la pantalla
-tamanio = (1000, 800)
+tamanio = (1000, 960)
 pantalla = pygame.display.set_mode(tamanio)
 
 #creamos un reloj
@@ -45,7 +45,7 @@ frecuencia_creacion_enemigo = 750
 def set_difficulty(value, difficulty):
     global frecuencia_creacion_enemigo
     frecuencia_creacion_enemigo = difficulty
-    pass
+    
 
 def start_the_game():
     running = [True]
@@ -53,12 +53,11 @@ def start_the_game():
     global frecuencia_creacion_enemigo
     global FPS
     global reloj
-    posicion = (650, 700)
-    nave = Elementos2.Nave(posicion)
+    
+    posicion_nave = (650, 700)
+    nave = Elementos2.Nave(posicion_nave)
+
     fondo = Elementos2.Fondo()
-    # crear un grupo de sprites
-    # grupo_sprites = pygame.sprite.Group(fondo)
-    # grupo_sprites.add(nave)
 
     # grupo_sprites.add(Elementos2.Nave((400,200)))
     # grupo_sprites.add(Elementos2.Nave((500,100)))
@@ -89,8 +88,8 @@ def start_the_game():
         if teclas[pygame.K_ESCAPE]:
             running[0] = False
 
-        #if teclas[pygame.K_SPACE]:
-            #pausado = not pausado
+        if teclas[pygame.K_SPACE]:
+            nave.disparar(grupo_sprites_todos, grupo_sprites_bala)
 
 
         if not pausado:
@@ -103,7 +102,7 @@ def start_the_game():
                 grupo_sprites_todos.add(enemigo)
                 grupo_sprites_enemigos.add(enemigo)
                 ultimo_enemigo_creado = momento_actual
-
+            
             grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
                                           running)
 

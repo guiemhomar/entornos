@@ -1,0 +1,12 @@
+AUMENTAR A 10 VIDAS
+
+3 enemigos, CRISTIANO ---> muere de un toque, pero si me da me quita 3 VIDAS
+            SERGIO RAMOS ---> muere de dos toques, pero si me da me quita 2 VIDAS
+            PEPE ---> muere de tres toques, pero si me da me quita 3 VIDAS
+
+al principio salen solo CRISTIANO, pero a medida que vas sobreviviendo, empiezan a salir los nuevos enemigos
+
+tambien a medida que pasa la partida, salen bonificaciones:
+
+BALON DE ORO: va mas deprisa, pero si consigo cogerlo, puedo apretar "la tecla que decida" y que se mueran todos los enemigos de la partida
+MAS VIDAS: salen vidas extra, para poder conseguir mas duracion en la partida
