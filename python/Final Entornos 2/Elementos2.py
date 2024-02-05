@@ -58,6 +58,7 @@ class Nave(pygame.sprite.Sprite):
             else:
                 self.parpadear = False
                 self.image = self.imagenes2[self.indice_imagen]
+
         
         if teclas[pygame.K_a]:
             self.rect.x -= 16
