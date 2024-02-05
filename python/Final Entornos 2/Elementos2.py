@@ -5,10 +5,7 @@ class Nave(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
         super().__init__()
         #cargamos la imagen
-        self.imagenes = [pygame.image.load("messipixel.png"), pygame.image.load("messipixel.png")]
-        self.imagenes2 = [pygame.transform.scale(self.imagenes[0], (90, 90)), pygame.transform.scale(self.imagenes[1], (90,90))]
-        self.indice_imagen = 0
-        self.image = self.imagenes2[self.indice_imagen]
+        self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
         self.mask = pygame.mask.from_surface(self.image)
         self.contador_imagen = 0
         #creamos un rectangulo a partir de la imagen
@@ -47,17 +44,19 @@ class Nave(pygame.sprite.Sprite):
         #capturamos balas
         grupo_sprites_bala = args[2]
         #gestionamos la teclas
+            
         
         if self.parpadear:
             tiempo_actual = pygame.time.get_ticks()
-            if tiempo_actual - self.tiempo_parpadear < 1000:
-                if tiempo_actual % 200 < 100:
-                    self.image = pygame.Surface((1,1))
-                else:
-                    self.image = self.imagenes2[self.indice_imagen]
+            # if tiempo_actual - self.tiempo_parpadear < 1000:
+            # print(tiempo_actual % 200 < 100)
+            if tiempo_actual % 200 < 100:
+                self.image = pygame.Surface((1,1))
             else:
-                self.parpadear = False
-                self.image = self.imagenes2[self.indice_imagen]
+                self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
+            # else:
+            #     self.parpadear = False
+            #     self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
 
         
         if teclas[pygame.K_a]:
@@ -74,8 +73,7 @@ class Nave(pygame.sprite.Sprite):
             
         #gestionamos la animación
         self.contador_imagen = (self.contador_imagen + 5) % 40
-        self.indice_imagen = self.contador_imagen // 30
-        self.image = self.imagenes2[self.indice_imagen]
+        # self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
         
         #Capturar grupo sprites enemigos 3
         grupo_sprites_enemigos = args[3]
@@ -150,11 +148,11 @@ class Bala(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
         super().__init__()
         self.image_original = pygame.image.load("balon.png")
-        self.image = pygame.transform.scale(self.image_original, (30, 30))
+        self.image = pygame.transform.scale(self.image_original, (20, 20))
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.center = posicion
-        self.velocidad = 20
+        self.velocidad = 26
 
     def update(self, *args: any, **kwargs: any) -> None:
         self.rect.y -= self.velocidad
