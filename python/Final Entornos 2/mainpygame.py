@@ -6,7 +6,7 @@ import pygame_menu
 pygame.init()
 
 #creamos la pantalla
-tamanio = (800,960)
+tamanio = (800,840)
 pantalla = pygame.display.set_mode(tamanio)
 
 #creamos un reloj
