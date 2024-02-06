@@ -22,8 +22,7 @@ class Nave(pygame.sprite.Sprite):
     def perder_vida(self):
         if self.vidas > 0:
             self.vidas -= 1
-            self.parpadear = True
-            self.tiempo_parpadear = pygame.time.get_ticks()
+            
     
     
     def disparar(self, grupo_sprites_todos, grupo_sprites_bala):
@@ -48,15 +47,15 @@ class Nave(pygame.sprite.Sprite):
         
         if self.parpadear:
             tiempo_actual = pygame.time.get_ticks()
-            # if tiempo_actual - self.tiempo_parpadear < 1000:
-            # print(tiempo_actual % 200 < 100)
             if tiempo_actual % 200 < 100:
-                self.image = pygame.Surface((1,1))
+                self.image = pygame.Surface((1,1)) #imagen invisible
             else:
                 self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
-            # else:
-            #     self.parpadear = False
-            #     self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
+                #reiniciar parpadeo
+                if tiempo_actual - self.tiempo_parpadear > 1000: #duracion
+                    self.parpadear = False
+        else:
+            self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
 
         
         if teclas[pygame.K_a]:
@@ -88,6 +87,9 @@ class Nave(pygame.sprite.Sprite):
             if self.vidas > 0:
                 #le quitamos vidas hasta llegar a 0
                 self.vidas -=1
+                self.parpadear = True
+                self.tiempo_parpadear = pygame.time.get_ticks()
+                
             else:
                 #cuando vidas = a 0 --> cerrar el juego
                 running[0] = False
