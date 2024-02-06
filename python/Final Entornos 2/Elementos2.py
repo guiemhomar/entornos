@@ -22,8 +22,7 @@ class Nave(pygame.sprite.Sprite):
     def perder_vida(self):
         if self.vidas > 0:
             self.vidas -= 1
-            self.parpadear = True
-            self.tiempo_parpadear = pygame.time.get_ticks()
+            
     
     
     def disparar(self, grupo_sprites_todos, grupo_sprites_bala):
@@ -48,16 +47,15 @@ class Nave(pygame.sprite.Sprite):
         
         if self.parpadear:
             tiempo_actual = pygame.time.get_ticks()
-            # if tiempo_actual - self.tiempo_parpadear < 1000:
-            # print(tiempo_actual % 200 < 100)
             if tiempo_actual % 200 < 100:
-                self.image = pygame.Surface((1,1))
+                self.image = pygame.Surface((1,1)) #imagen invisible
             else:
-                self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
-                self.parpadear = False
-            # else:
-            #     self.parpadear = False
-            #     self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
+                self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (60, 60))
+                #reiniciar parpadeo
+                if tiempo_actual - self.tiempo_parpadear > 1000: #duracion
+                    self.parpadear = False
+        else:
+            self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (60, 60))
 
         
         if teclas[pygame.K_a]:
@@ -89,6 +87,9 @@ class Nave(pygame.sprite.Sprite):
             if self.vidas > 0:
                 #le quitamos vidas hasta llegar a 0
                 self.vidas -=1
+                self.parpadear = True
+                self.tiempo_parpadear = pygame.time.get_ticks()
+                
             else:
                 #cuando vidas = a 0 --> cerrar el juego
                 running[0] = False
@@ -100,7 +101,7 @@ class Enemigo(pygame.sprite.Sprite):
         super().__init__()
         #cargamos la imagen
         imagen = pygame.image.load("cr7pixel.png")
-        imagen2 = pygame.transform.scale(imagen, (90, 120))
+        imagen2 = pygame.transform.scale(imagen, (60, 90))
         self.image = pygame.transform.rotate(imagen2, 0)
         self.mask = pygame.mask.from_surface(self.image)
         #creamos un rectangulo a partir de la imagen
@@ -130,6 +131,9 @@ class Fondo(pygame.sprite.Sprite):
         super().__init__()
         # cargamos la imagen
         imagen = pygame.image.load("fondo.png")
+        pantalla = pygame.display.get_surface()
+        #transformar la imagen
+        self.image = pygame.transform.scale(imagen, (700, 800))
         #pantalla
         pantalla = pygame.display.get_surface()
         self.image = pygame.transform.scale(imagen, (pantalla.get_width(), imagen.get_height()))
