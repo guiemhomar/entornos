@@ -54,6 +54,7 @@ class Nave(pygame.sprite.Sprite):
                 self.image = pygame.Surface((1,1))
             else:
                 self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
+                self.parpadear = False
             # else:
             #     self.parpadear = False
             #     self.image = pygame.transform.scale(pygame.image.load("messipixel.png"), (90, 90))
