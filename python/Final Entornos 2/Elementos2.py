@@ -14,7 +14,7 @@ class Nave(pygame.sprite.Sprite):
         self.rect.topleft = posicion
         self.ultimo_disparo = 0
         #creamos las vidas
-        self.vidas = 3
+        self.vidas = 10
         #hacemos que parpadee al perder una vida
         self.parpadear = False
         self.tiempo_parpadear = pygame.time.get_ticks()
