@@ -100,9 +100,7 @@ class Enemigo(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
         super().__init__()
         #cargamos la imagen
-        imagen = [pygame.image.load("cr7pixel.png"), ]
-        imagen2 = pygame.transform.scale(imagen, (60, 90))
-        self.image = pygame.transform.rotate(imagen2, 0)
+        self.image = pygame.transform.scale(pygame.image.load("cr7pixel.png"), (60,90)) 
         self.mask = pygame.mask.from_surface(self.image)
         #creamos un rectangulo a partir de la imagen
         self.rect = self.image.get_rect()
