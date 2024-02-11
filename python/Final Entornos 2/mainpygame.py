@@ -6,8 +6,28 @@ import pygame_menu
 pygame.init()
 
 #creamos la pantalla
-tamanio = (800,840)
+tamanio = (800,960)
 pantalla = pygame.display.set_mode(tamanio)
+
+# Cargar la imagen del fondo del menú
+imagen_fondo_menu = pygame_menu.baseimage.BaseImage(
+    image_path="fondo.png",
+    drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL
+)
+
+# Crear el tema del menú
+tema_menu = pygame_menu.themes.Theme(
+    background_color=imagen_fondo_menu,
+    title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_NONE,
+    title_font=pygame_menu.font.FONT_8BIT,
+    title_font_size=40,
+    title_offset=(170, 260),
+    widget_padding=20,
+    widget_font=pygame_menu.font.FONT_8BIT,
+    widget_font_size=30,
+    widget_font_color=(220, 220, 220),  
+)
+
 
 #creamos un reloj
 reloj = pygame.time.Clock()
@@ -42,6 +62,19 @@ font = pygame.font.Font(None, 30)
 ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
 
+contador_balondeoro = 0
+contador_enemigo2 = 0
+contador_enemigo3 = 0
+limite_enemigo2 = 5
+limite_enemigo3 = 5
+limite_balondeoro = 1
+
+frecuencia_creacion_enemigo1 = 0
+frecuencia_creacion_enemigo2 = 0
+frecuencia_creacion_enemigo3 = 0
+frecuencia_creacion_balondeoro = 0
+
+
 def set_difficulty(value, difficulty):
     global frecuencia_creacion_enemigo
     frecuencia_creacion_enemigo = difficulty
@@ -51,8 +84,13 @@ def start_the_game():
     running = [True]
     global ultimo_enemigo_creado
     global frecuencia_creacion_enemigo
+    global frecuencia_creacion_enemigo1
+    global frecuencia_creacion_enemigo2
+    global frecuencia_creacion_enemigo3
+    global frecuencia_creacion_balondeoro
     global FPS
     global reloj
+    
     
     posicion_nave = (650, 700)
     nave = Elementos2.Nave(posicion_nave)
@@ -66,6 +104,7 @@ def start_the_game():
     grupo_sprites_todos = pygame.sprite.Group()
     grupo_sprites_enemigos = pygame.sprite.Group()
     grupo_sprites_bala = pygame.sprite.Group()
+    grupo_sprites_balon = pygame.sprite.Group()
 
      # grupo_sprites_todos.add(Elementos2.Fondo, (0, - ))
     grupo_sprites_todos.add(fondo)
@@ -93,6 +132,19 @@ def start_the_game():
 
 
         if not pausado:
+            #controlar la aparicion de enemigos
+            tiempo_transcurrido = pygame.time.get_ticks() / 1000
+            if tiempo_transcurrido < 5:
+                frecuencia_creacion_enemigo1 = 700
+            elif tiempo_transcurrido < 8:
+                frecuencia_creacion_enemigo1 = 1000
+                frecuencia_creacion_enemigo2 = 700
+            else:
+                frecuencia_creacion_enemigo1 = 1300
+                frecuencia_creacion_enemigo2 = 1000
+                frecuencia_creacion_enemigo3 = 900
+                frecuencia_creacion_balondeoro = 8000
+            
             # creacion de enemigos
             momento_actual = pygame.time.get_ticks()
             if (momento_actual > ultimo_enemigo_creado + frecuencia_creacion_enemigo):
@@ -102,8 +154,42 @@ def start_the_game():
                 grupo_sprites_todos.add(enemigo)
                 grupo_sprites_enemigos.add(enemigo)
                 ultimo_enemigo_creado = momento_actual
+
+                if tiempo_transcurrido >= 5 and contador_enemigo2 < limite_enemigo2:
+                    cordX2 = random.randint(0, pantalla.get_width())
+                    cordY2 = 0
+                    enemigo2 = Elementos2.Enemigo2((cordX2, cordY2))
+                    grupo_sprites_todos.add(enemigo2)
+                    grupo_sprites_enemigos.add(enemigo2)
+                    ultimo_enemigo_creado = momento_actual
+                    contador_enemigo2 +=1
+                    contador_balondeoro +=1
+                else:
+                    contador_enemigo2 = 0
+                    contador_balondeoro = 0
+
+                if tiempo_transcurrido >= 8 and contador_enemigo3 < limite_enemigo3 and contador_balondeoro < limite_balondeoro: 
+                    cordX3 = random.randint(0, pantalla.get_width())
+                    cordY3 = 0
+                    enemigo3 = Elementos2.Enemigo3((cordX3, cordY3))
+                    grupo_sprites_todos.add(enemigo3)
+                    grupo_sprites_enemigos.add(enemigo3)
+                    ultimo_enemigo_creado = momento_actual
+                    contador_enemigo3 +=1
+                    contador_balondeoro += 1
+                else:
+                    contador_enemigo3 = 0
+                    contador_balondeoro = 0
+
+                if tiempo_transcurrido >= 15: 
+                    cordX3 = random.randint(0, pantalla.get_width())
+                    cordY3 = 0
+                    balondeoro = Elementos2.BalonDeOro((cordX3, cordY3))
+                    grupo_sprites_todos.add(balondeoro)
+                    grupo_sprites_enemigos.add(balondeoro)
+                    ultimo_enemigo_creado = momento_actual
             
-            grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
+            grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos, grupo_sprites_balon,
                                           running)
 
         # capturamos las teclas
@@ -113,15 +199,17 @@ def start_the_game():
         # grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos, running)
         grupo_sprites_todos.draw(pantalla)
 
-        if pausado:
-            texto = font.render("PAUSA", True, "White")
-            pantalla.blit(texto, (pantalla.get_width() / 2, pantalla.get_height() / 2))
+        nave.mostrar_contadores(pantalla)
+
+        # if pausado:
+        #     texto = font.render("PAUSA", True, "White")
+        #     pantalla.blit(texto, (pantalla.get_width() / 2, pantalla.get_height() / 2))
 
         # redibujar la pantala
         pygame.display.flip()
     pass
 
-menu = pygame_menu.Menu('Welcome', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
+menu = pygame_menu.Menu('getBalonDor()', 800, 960, theme=tema_menu)
 
 menu.add.text_input('Name :', default='')
 menu.add.selector('Difficulty :', [('Hard', 200), ('Easy', 2000)], onchange=set_difficulty)
